@@ -53,3 +53,8 @@
   level: 'info',
   label: 'PH'
 }
+{
+  message: 'Example app listening on port 5000',
+  level: 'info',
+  label: 'PH'
+}

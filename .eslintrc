@@ -42,7 +42,7 @@
   ],
   "rules": {
     "no-unused-vars": "error",
-    "no-console": "error",
+    "no-console": "warn",
     "no-unused-expressions": "error",
     "no-unreachable": "error",
     "no-undef": "error",
