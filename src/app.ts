@@ -4,6 +4,8 @@ import { globalErrorHandler } from './app/middlewares/globalErrorHandler'
 
 import routes from './app/routes'
 import httpStatus from 'http-status'
+// import { UserRouter } from './app/modules/users/user.route'
+// import { AcademicSemesterRouter } from './app/modules/academicSemester/academicSemester.route'
 
 export const app: Application = express()
 export const port = 3000

@@ -10,7 +10,7 @@ const cerateAcademicSemesterZodSchema = z.object({
     title: z.enum([...academicSemesterTitles] as [string, ...string[]], {
       required_error: 'Title is Required',
     }),
-    year: z.number({
+    year: z.string({
       required_error: 'Year is Required',
     }),
     code: z.enum([...academicSemesterCode] as [string, ...string[]]),
@@ -22,8 +22,45 @@ const cerateAcademicSemesterZodSchema = z.object({
     }),
   }),
 })
+const updateAcademicSemesterZodSchema = z
+  .object({
+    body: z.object({
+      title: z
+        .enum([...academicSemesterTitles] as [string, ...string[]], {
+          required_error: 'Title is Required',
+        })
+        .optional(),
+      year: z
+        .string({
+          required_error: 'Year is Required',
+        })
+        .optional(),
+      code: z
+        .enum([...academicSemesterCode] as [string, ...string[]])
+        .optional(),
+      startMonth: z
+        .enum([...academicSemesterMonths] as [string, ...string[]], {
+          required_error: 'Start months is required',
+        })
+        .optional(),
+      endMonth: z
+        .enum([...academicSemesterMonths] as [string, ...string[]], {
+          required_error: 'End months is required',
+        })
+        .optional(),
+    }),
+  })
+  .refine(
+    data =>
+      (data.body.title && data.body.code) ||
+      (!data.body.title && !data.body.code),
+    {
+      message: 'Either both title and code should be provided nither',
+    }
+  )
 export const AcademicSemesterValidation = {
   cerateAcademicSemesterZodSchema,
+  updateAcademicSemesterZodSchema,
 }
 
 // await cerateUserZodSchema.parseAsync(req.body)

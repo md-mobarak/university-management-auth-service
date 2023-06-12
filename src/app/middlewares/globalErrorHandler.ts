@@ -7,6 +7,7 @@ import { ApiError } from '../../errors/ApiError'
 import { errorLogger } from '../../shared/logger'
 import { ZodError } from 'zod'
 import handleZodError from '../../errors/handleZodError'
+import { handleCastError } from '../../errors/handleCastError'
 
 export const globalErrorHandler: ErrorRequestHandler = (
   err,
@@ -22,6 +23,7 @@ export const globalErrorHandler: ErrorRequestHandler = (
   let statusCode = 500
   let message = 'something went wrong !'
   let errorMessages: IGenericErrorMessage[] = []
+
   if (err?.name === 'ValidationError') {
     const simplefyError = handleValidationerror(err)
     statusCode = simplefyError?.statusCode
@@ -31,6 +33,11 @@ export const globalErrorHandler: ErrorRequestHandler = (
     const simplefyError = handleZodError(err)
     statusCode = simplefyError.statusCode
     message = simplefyError.message
+    errorMessages = simplefyError.errorMessages
+  } else if (err.name === 'castError') {
+    const simplefyError = handleCastError(err)
+    message = simplefyError.message
+    statusCode = simplefyError.statusCode
     errorMessages = simplefyError.errorMessages
   } else if (err instanceof Error) {
     message = err?.message

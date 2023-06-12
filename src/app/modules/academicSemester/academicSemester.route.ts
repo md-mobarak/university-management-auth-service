@@ -10,6 +10,12 @@ route.post(
   validateRequest(AcademicSemesterValidation.cerateAcademicSemesterZodSchema),
   AcademicSemesterController.createSemesterController
 )
+route.get('/:id', AcademicSemesterController.getSingleSemesterController)
 route.get('/', AcademicSemesterController.getAllSemestersController)
+route.patch(
+  '/:id',
+  validateRequest(AcademicSemesterValidation.updateAcademicSemesterZodSchema),
+  AcademicSemesterController.updateSemesterController
+)
 
 export const AcademicSemesterRouter = route
